@@ -54,19 +54,15 @@ public extension FontStyle {
             fatalError("Couldn't find resource url for \(fileName).\(fileExtension)")
         }
         
-        if #available(iOS 13.0, *) {
-            CTFontManagerRegisterFontURLs([fontURL] as CFArray, .persistent, true) { (errors, didRegister) -> Bool in
-                if didRegister {
-                    print("Font registered '\(fileName)'")
-                } else {
-                    fatalError("Couldn't register font \(fileName) with errors: \(errors as Array)")
-                }
-                return true
+        CTFontManagerRegisterFontURLs([fontURL] as CFArray, .persistent, true) { (errors, didRegister) -> Bool in
+            if didRegister {
+                print("Font registered '\(fileName)'")
+            } else {
+                fatalError("Couldn't register font \(fileName) with errors: \(errors as Array)")
             }
-        } else {
-            // No need to fallback as minimum required os version is iOS 16.0
-            // Fallback on earlier versions
+            return true
         }
+        
     }
     
 }
